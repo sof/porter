@@ -1,0 +1,24 @@
+Name:               porter
+Version:            0.1
+License:            BSD3
+Category:           Text
+Synopsis:           Interfacing with RSS (v 0.9x, 2.x, 1.0) + Atom feeds.
+Description:        Interfacing with RSS (v 0.9x, 2.x, 1.0) + Atom feeds.
+Author:             Sigbjorn Finne <sof@forkIO.com>
+Maintainer:         Sigbjorn Finne <sof@forkIO.com>
+Homepage:           https://github.com/sof/porter
+Extra-Source-Files: tests/tests.json Test.hs
+Cabal-version:   >= 1.2
+build-type: Simple
+
+library {
+    Exposed-Modules: Text.Stem.Porter
+                     Text.Stem.StemWord
+    Ghc-Options:     -Wall
+    Build-Depends:   base >= 4 && < 5
+}
+
+executable checker {
+    main-is: Test.hs
+    Build-Depends:   base >= 4 && < 5
+}
