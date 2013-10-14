@@ -9,7 +9,9 @@
 -- Portability:
 --
 --------------------------------------------------------------------
-module Text.Stem.Porter where
+module Text.Stem.Porter
+       ( stem    -- :: String -> String
+       ) where
 
 import Data.Maybe
 import Control.Monad (mplus)
@@ -34,8 +36,8 @@ import Text.Stem.StemWord
 
 stem :: String -> String
 stem "" = ""
-stem [x] = [x]
-stem [x, y] = [x, y]
+stem ls@[_] = ls
+stem ls@[_, _] = ls
 stem s = fromStemWord $ foldl (\ acc f -> f acc) sw steps
  where
   sw = toStemWord s

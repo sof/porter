@@ -9,7 +9,20 @@
 -- Portability:
 --
 --------------------------------------------------------------------
-module Text.Stem.StemWord where
+module Text.Stem.StemWord
+       ( StemWord
+       , toStemWord      -- :: String -> StemWord
+       , fromStemWord    -- :: StemWord -> String
+
+       , wordLength      -- :: StemWord -> Int
+
+       , lastChar        -- :: StemWord -> Char
+       , indexChar       -- :: Int -> StemWord -> Maybe Char
+
+       , dropSuffixChars -- :: Int -> StemWord -> StemWord
+       , addSuffix       -- :: String -> StemWord -> StemWord
+       , endsWith        -- :: String -> StemWord -> Bool
+       ) where
 
 import Data.Maybe ( isJust )
 
@@ -26,15 +39,21 @@ data StemWord
      updated  :: Bool
    }
 
+-- | @wordLength sw@ returns the word length (in characters.)
 wordLength :: StemWord -> Int
 wordLength sw = length (adds sw) + length (suffix sw)
 
+-- | @lastChar sw@ returns the last character of the word.
+-- Undefined/bottom if word is empty.
 lastChar :: StemWord -> Char
 lastChar sw =
   case adds sw of
     "" -> head (suffix sw)
     (x:_) -> x
 
+-- | @indexChar idx sw@ indexes the suffix, with 0 being the first
+-- character of the suffix (the last character of the word, if you
+-- prefer.) Returns @Nothing@ if the index is exceeds the word length.
 indexChar :: Int -> StemWord -> Maybe Char
 indexChar i sw =
   case go i (adds sw) of
